@@ -15,3 +15,7 @@
 
 ## 類型
 - 大亨／產業鏈：航線、倉儲、合約與對手 AI。
+
+## Original release work
+
+The interface graphics, canvas art, synthesized music, and sound effects in this release are original procedural work created for **藍港大亨**. The third-party packs listed above remain bundled for provenance but are not loaded at runtime.
