@@ -1,1 +1,98 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0b0d10"><link rel="stylesheet" href="./styles.css"><title>Game</title></head><body><main><header><div><small id="genre"></small><h1 id="title"></h1></div><button id="sound" aria-pressed="false">♫ 音效</button></header><section id="intro"><div class="sigil">◆</div><p id="help"></p><button id="start" class="primary">進入遊戲</button><a href="./ATTRIBUTION.md">製作與素材署名</a></section><section id="game" hidden><div id="stats"></div><div id="scene"></div><p id="message" aria-live="polite"></p><div id="actions"></div></section></main><script type="module" src="./app.js"></script></body></html>
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <meta name="theme-color" content="#0a1628" />
+    <meta name="description" content="航線、倉儲、合約與 AI 對手 — 十二季港口經營。" />
+    <title>藍港大亨</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <div class="brand">
+          <small>航運經營</small>
+          <h1>藍港大亨</h1>
+        </div>
+        <button id="sound" class="ghost" aria-pressed="true">♫ 音效</button>
+      </header>
+
+      <section id="lobby" class="panel">
+        <p class="lead">
+          經營台灣西岸深水港，在 <strong>12</strong> 季內把市值拉到超越 AI 對手
+          <strong>海岳航運</strong>。開闢航線派船、擴建碼頭、接貨交約 — 點地圖操作，不是按鈕充數。
+        </p>
+        <ul class="rules">
+          <li><b>碼頭</b> — 點下方倉儲格擴建容量，溢港會罰款</li>
+          <li><b>航線</b> — 點外海目的地開闢／升級／派船，下季返港帶貨</li>
+          <li><b>合約</b> — 點合約卡承接，季末自動交貨；逾期三次即敗</li>
+          <li><b>運價</b> — 調高賺單票、調低搶市占；對手也會成長</li>
+        </ul>
+        <p class="record">最佳市值 <strong id="best">0</strong></p>
+        <div class="lobby-actions">
+          <button id="start" class="primary">開始經營</button>
+          <button id="resume" class="ghost" hidden>續玩（第 <span id="resume-q">1</span> 季）</button>
+        </div>
+        <a class="credits-link" href="./ATTRIBUTION.md">製作與素材署名</a>
+      </section>
+
+      <section id="game" hidden>
+        <div class="hud" id="hud"></div>
+
+        <div class="map-wrap">
+          <canvas id="map" aria-label="港口地圖：點碼頭或航線目的地"></canvas>
+        </div>
+
+        <p id="msg" class="msg" aria-live="polite"></p>
+
+        <div id="inspect" class="inspect" hidden></div>
+
+        <div class="contracts">
+          <h2>合約牌</h2>
+          <div id="offers" class="offer-row"></div>
+          <div id="active" class="active-row"></div>
+        </div>
+
+        <div class="side">
+          <label class="freight" for="freight">
+            運價 <output id="freight-val">100</output>%
+            <input id="freight" type="range" min="80" max="120" step="5" value="100" />
+          </label>
+          <div class="controls">
+            <button id="next-q" class="primary">結算本季 ▸</button>
+            <button id="auto" class="ghost" aria-pressed="false">▶ 自動</button>
+            <button id="quit" class="ghost danger-ghost">放棄</button>
+          </div>
+        </div>
+
+        <details class="log-box">
+          <summary>港務紀錄</summary>
+          <div id="report" class="report"></div>
+          <ul id="log"></ul>
+        </details>
+      </section>
+
+      <div id="overlay" class="overlay" hidden>
+        <div class="overlay-card">
+          <h2 id="overlay-title"></h2>
+          <p id="overlay-body"></p>
+          <ul id="overlay-stats" class="overlay-stats"></ul>
+          <div id="overlay-actions" class="overlay-actions"></div>
+        </div>
+      </div>
+
+      <div id="confirm" class="overlay" hidden>
+        <div class="overlay-card confirm-card" role="alertdialog" aria-modal="true" aria-labelledby="confirm-title" aria-describedby="confirm-body">
+          <h2 id="confirm-title"></h2>
+          <p id="confirm-body"></p>
+          <div class="overlay-actions">
+            <button id="confirm-cancel" class="primary">取消</button>
+            <button id="confirm-ok" class="danger">確定</button>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

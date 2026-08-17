@@ -1,1 +1,84 @@
-export class GameAudio{constructor(){this.on=true;this.ctx=null;this.loop=null;this.beat=0}async start(){this.ctx??=new AudioContext();if(this.ctx.state==="suspended")await this.ctx.resume();this.music();this.loop??=setInterval(()=>this.music(),1400)}music(){const notes=[110,147,165,131];this.tone(notes[this.beat++%notes.length],1.2,.018);setTimeout(()=>this.tone(notes[this.beat%notes.length]*2,.45,.009),520)}tone(freq,dur,vol){if(!this.on||!this.ctx)return;const o=this.ctx.createOscillator(),g=this.ctx.createGain();o.type="triangle";o.frequency.value=freq;g.gain.setValueAtTime(vol,this.ctx.currentTime);g.gain.exponentialRampToValueAtTime(.0001,this.ctx.currentTime+dur);o.connect(g).connect(this.ctx.destination);o.start();o.stop(this.ctx.currentTime+dur)}fx(name){this.tone(name==="win"?520:240,.12,.06)}toggle(btn){this.on=!this.on;btn.setAttribute("aria-pressed",String(this.on));btn.textContent=this.on?"♫ 音效":"♫ 靜音";if(this.on)this.start()}}
+const SFX = {
+  click: "./assets/audio/click.ogg",
+  build: "./assets/audio/build.ogg",
+  ship: "./assets/audio/ship.ogg",
+  error: "./assets/audio/error.ogg",
+  quarter: "./assets/audio/quarter.ogg",
+  win: "./assets/audio/win.ogg",
+  lose: "./assets/audio/lose.ogg",
+};
+
+const MUSIC = "./assets/audio/music.ogg";
+const MUSIC_VOLUME = 0.18;
+
+export class GameAudio {
+  constructor() {
+    this.enabled = true;
+    this.ctx = null;
+    this.buffers = new Map();
+    this.music = null;
+    this.musicGain = null;
+  }
+
+  async start() {
+    this.ctx ??= new AudioContext();
+    await this.ctx.resume();
+    await Promise.all(Object.entries(SFX).map(([name, url]) => this.#load(name, url)));
+    await this.#startMusic();
+  }
+
+  async #load(name, url) {
+    if (this.buffers.has(name)) return;
+    try {
+      const res = await fetch(url);
+      this.buffers.set(name, await this.ctx.decodeAudioData(await res.arrayBuffer()));
+    } catch {
+      this.buffers.set(name, null);
+    }
+  }
+
+  async #startMusic() {
+    if (this.music || !this.ctx) return;
+    try {
+      const res = await fetch(MUSIC);
+      const buffer = await this.ctx.decodeAudioData(await res.arrayBuffer());
+      const source = this.ctx.createBufferSource();
+      const gain = this.ctx.createGain();
+      source.buffer = buffer;
+      source.loop = true;
+      gain.gain.value = this.enabled ? MUSIC_VOLUME : 0;
+      source.connect(gain).connect(this.ctx.destination);
+      source.start();
+      this.music = source;
+      this.musicGain = gain;
+    } catch {}
+  }
+
+  play(name, { volume = 0.5, rate = 1 } = {}) {
+    const buffer = this.buffers.get(name);
+    if (!this.enabled || !this.ctx || !buffer) return;
+    const source = this.ctx.createBufferSource();
+    const gain = this.ctx.createGain();
+    source.buffer = buffer;
+    source.playbackRate.value = rate;
+    gain.gain.value = volume;
+    source.connect(gain).connect(this.ctx.destination);
+    source.start();
+  }
+
+  setEnabled(on) {
+    this.enabled = on;
+    if (this.musicGain) this.musicGain.gain.value = on ? MUSIC_VOLUME : 0;
+  }
+
+  suspend() {
+    if (this.musicGain) this.musicGain.gain.value = 0;
+    if (this.ctx?.state === "running") void this.ctx.suspend();
+  }
+
+  resume() {
+    if (!this.enabled) return;
+    if (this.ctx?.state === "suspended") void this.ctx.resume();
+    if (this.musicGain) this.musicGain.gain.value = MUSIC_VOLUME;
+  }
+}

@@ -1,21 +1,33 @@
-# Attribution（pg-porttycoon）
+# 藍港大亨 — 製作與署名
 
-本遊戲使用以下資源（即使 CC0 仍署名）：
+程式、規則設計、介面與 CSS 為本專案原創。以下第三方素材皆為 **CC0 1.0**；即使授權未要求署名，本專案仍逐項列出作者與來源。
 
 ## 美術
-- Kenney.nl packs（CC0）— 見 `assets/licenses/` 與 [game-assets/ATTRIBUTION.md](https://github.com/sampot/playgrounds/blob/main/game-assets/ATTRIBUTION.md)
-- 角色／圖示依類型取自 Toon Characters、Sports Pack、Pixel Platformer、Pixel Shmup、Playing Cards、Boardgame Pack、Food Kit、Fish Pack 等
 
-## 音效
-- Kenney UI Audio、Impact Sounds、Casino Audio、RPG Audio（CC0）
+| 檔案 | 來源 | 作者 | 授權 |
+| --- | --- | --- | --- |
+| `assets/images/crate.png` | [Generic Items](https://kenney.nl/assets/generic-items) | Kenney | CC0 1.0 |
+| `assets/images/barrel.png` | [Generic Items](https://kenney.nl/assets/generic-items) | Kenney | CC0 1.0 |
+| `assets/images/icebox.png` | [Generic Items](https://kenney.nl/assets/generic-items) | Kenney | CC0 1.0 |
+
+港口地圖、碼頭、航線與船隻動畫為執行時 canvas 繪製，非第三方圖磚。
 
 ## 音樂
-- Dylann Taylor — BLIPPY BITS（Loop）https://dylanntaylor.itch.io/blippy-bits
-- HydroGene — High Quality 16-bit RPG Music（部分策略／RPG 曲）https://hydrogene.itch.io/high-quality-16bit-music
 
-## 類型
-- 大亨／產業鏈：航線、倉儲、合約與對手 AI。
+| 檔案 | 曲目 | 作者 | 授權 |
+| --- | --- | --- | --- |
+| `assets/audio/music.ogg` | `ChillMenu_Loopable`，出自 [Not Jam Music Pack](https://not-jam.itch.io/not-jam-music-pack) | Not Jam | CC0 1.0 |
+| `assets/audio/win.ogg` | `jingles_STEEL00`，出自 [Music Jingles](https://kenney.nl/assets/music-jingles) | Kenney | CC0 1.0 |
+| `assets/audio/lose.ogg` | `jingles_STEEL09`，出自 [Music Jingles](https://kenney.nl/assets/music-jingles) | Kenney | CC0 1.0 |
 
-## Original release work
+## 音效
 
-The interface graphics, canvas art, synthesized music, and sound effects in this release are original procedural work created for **藍港大亨**. The third-party packs listed above remain bundled for provenance but are not loaded at runtime.
+| 檔案 | 原始檔 | 來源 | 作者 | 授權 |
+| --- | --- | --- | --- | --- |
+| `assets/audio/click.ogg` | `click_002.ogg` 或 `select_004.ogg` | [Interface Sounds](https://kenney.nl/assets/interface-sounds) | Kenney | CC0 1.0 |
+| `assets/audio/build.ogg` | `drop_002.ogg` | [Interface Sounds](https://kenney.nl/assets/interface-sounds) | Kenney | CC0 1.0 |
+| `assets/audio/error.ogg` | `error_004.ogg` | [Interface Sounds](https://kenney.nl/assets/interface-sounds) | Kenney | CC0 1.0 |
+| `assets/audio/quarter.ogg` | `bong_001.ogg` | [Interface Sounds](https://kenney.nl/assets/interface-sounds) | Kenney | CC0 1.0 |
+| `assets/audio/ship.ogg` | `impactPlate_heavy_004.ogg` | [Impact Sounds](https://kenney.nl/assets/impact-sounds) | Kenney | CC0 1.0 |
+
+授權原文置於 [`assets/licenses/`](./assets/licenses/)。
